@@ -16,6 +16,7 @@ private:
 	/// <summary>
 	/// Le menu de l'application
 	/// </summary>
+	///
 	Menu menu;
 
 	/// <summary>
@@ -23,7 +24,10 @@ private:
 	/// @TODO Déclarer les 3 conteneurs avec les noms et caractéristiques indiqués dans le sujet
 	/// 
 	/// </summary>
-
+	/// 
+	std::deque<int> dossardsPourAffectation;               
+	std::list<Concurrent> concurrentsInscrits;            
+	std::multimap<int, Concurrent> resultats;
 
 
 public:
@@ -33,7 +37,25 @@ public:
 	/// puis à les créer dans le conteneur dossardsPourAffectation.
 	/// Entre 2 et 100 dossards.
 	/// </summary>
-	void InitialiserCompetition();
+	void InitialiserCompetition() {
+
+		int nombreDossards;
+		std::deque<int> dossardsPourAffectation;
+
+		do {
+			std::cout << "Entrez le nombre de dossards nécessaires (entre 2 et 100) : ";
+			std::cin >> nombreDossards;
+		} while (nombreDossards < 2 || nombreDossards > 100);
+
+
+		for (int i = 1; i <= nombreDossards; i++) {
+			dossardsPourAffectation.push_back(i);
+		}
+
+
+
+		std::cout << "La compétition a été initialisée avec succès !" << std::endl;
+	};
 
 	/// <summary>
 	/// Inscrire un concurent.
@@ -45,7 +67,40 @@ public:
 	/// Pas d'inscription possible s'il ne reste plus de dossard disponible.
 	/// Le concurrent est affiché ainsi que le nombre de dossards pouvant encore être attribués.
 	/// </summary>
-	void InscrireUnConcurrent();
+	void InscrireUnConcurrent() {
+
+		if (dossardsPourAffectation.empty()) {
+			std::cout << "Plus de dossards disponibles. L'inscription n'est pas possible." << std::endl;
+			return;
+		}
+
+		std::string nomConcurrent;
+		std::list<std::string> concurrentsInscrits;
+
+		// nom du concurrent
+		std::cout << "Entrez le nom du concurrent : ";
+		std::cin >> nomConcurrent;
+
+		// Retirer dossard au hasard du conteneur dossardsPourAffectation
+		std::srand(static_cast<unsigned>(std::time(nullptr)));  // nombres aléatoires
+		int randomIndex = std::rand() % dossardsPourAffectation.size();
+		auto it = dossardsPourAffectation.begin() + randomIndex;
+		int dossard = *it;
+		dossardsPourAffectation.erase(it);
+
+		// Création du concurrent avec son nom et le dossard
+		std::string concurrentInscrit = "Nom: " + nomConcurrent + ", Dossard: " + std::to_string(dossard);
+
+		// Ajouter le concurrent au conteneur concurrentsInscrits
+		concurrentsInscrits.push_back(concurrentInscrit);
+
+		// Affichage du concurrent inscrit et du nombre de dossards restants
+		std::cout << "Concurrent inscrit : " << concurrentInscrit << std::endl;
+		std::cout << "Nombre de dossards restants : " << dossardsPourAffectation.size() << std::endl;
+	};
+
+
+
 
 	/// <summary>
 	/// Affiche la liste des concurrents inscrits par ordre alphabétique des noms
