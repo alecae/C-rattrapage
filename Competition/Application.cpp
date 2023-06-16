@@ -28,7 +28,20 @@ int hasard(int deb, int fin)
 /// </summary>
 void Application::InitialiserCompetition()
 {
-	//@TODO à compléter.
+	cout << "Saisir le nombre de dossards nécessaires (entre 2 et 100) : " << endl;
+	int nombreDossards;
+	cin >> nombreDossards;
+
+	if (nombreDossards < 2 || nombreDossards > 100) {
+		cout << "Nombre de dossards invalide !" << endl;
+		return;
+	}
+
+	for (int i = 1; i <= nombreDossards; i++) {
+		dossardsPourAffectation.push_back(i);
+	}
+
+	cout << "Compétition initialisée avec " << nombreDossards << " dossards." << endl;
 }
 
 /// <summary>
@@ -42,7 +55,34 @@ void Application::InitialiserCompetition()
 /// </summary>
 void Application::InscrireUnConcurrent()
 {
-	//@TODO à compléter.
+	if (dossardsPourAffectation.empty()) {
+		std::cout << "Plus de dossards disponibles. L'inscription n'est pas possible." << std::endl;
+		return;
+	}
+
+	std::string nomConcurrent;
+
+	std::cout << "Entrez le nom du concurrent : ";
+	std::cin >> nomConcurrent;
+
+	// Retirer un dossard au hasard du conteneur dossardsPourAffectation
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, dossardsPourAffectation.size() - 1);
+	int randomIndex = dis(gen);
+	auto it = std::next(dossardsPourAffectation.begin(), randomIndex);
+	int dossard = *it;
+	dossardsPourAffectation.erase(it);
+
+	Concurrent concurrent(nomConcurrent, dossard);
+
+	
+	concurrentsInscrits.push_back(concurrent);
+
+	// Affichage du concurrent inscrit et du nombre de dossards restants
+	std::cout << "Concurrent inscrit : " << concurrent.GetNom() << ", Dossard : " << concurrent.GetDossard() << std::endl;
+	std::cout << "Nombre de dossards restants : " << dossardsPourAffectation.size() << std::endl;
+	
 }
 
 /// <summary>
