@@ -117,13 +117,13 @@ void Application::AfficherParDossard()
 
 	cout << "Liste des concurrents inscrits par ordre croissant des dossards :" << endl;
 
-	// Copier les concurrents inscrits dans une liste temporaire pour trier par dossard
+	// Copier les concurrents dans un autres liste pour les trier
 	list<Concurrent> concurrentsTries(concurrentsInscrits.begin(), concurrentsInscrits.end());
 	concurrentsTries.sort([](const Concurrent& c1, const Concurrent& c2) {
 		return c1.GetDossard() < c2.GetDossard();
 		});
 
-	// Afficher les concurrents triés par dossard
+	// Afficher les concurrents
 	for (const auto& concurrent : concurrentsTries) {
 		cout << "Dossard: " << concurrent.GetDossard() << ", Nom: " << concurrent.GetNom() << endl;
 	}
@@ -139,7 +139,23 @@ void Application::AfficherParDossard()
 /// </summary>
 void Application::NoterConcurrents()
 {
-	//@TODO à compléter.
+	if (concurrentsInscrits.empty()) {
+		cout << "Aucun concurrent inscrit." << endl;
+		return;
+	}
+
+	cout << "Notation des concurrents..." << endl;
+
+	while (!concurrentsInscrits.empty()) {
+		Concurrent concurrent = concurrentsInscrits.front();
+		concurrentsInscrits.pop_front();
+
+		int score = hasard(0, 11);  
+
+		resultats.insert({ score, concurrent });
+	}
+
+	cout << "Tous les concurrents ont été notés." << endl;
 }
 
 /// <summary>
