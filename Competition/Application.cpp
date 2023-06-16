@@ -56,32 +56,28 @@ void Application::InitialiserCompetition()
 void Application::InscrireUnConcurrent()
 {
 	if (dossardsPourAffectation.empty()) {
-		std::cout << "Plus de dossards disponibles. L'inscription n'est pas possible." << std::endl;
+		cout << "Plus de dossards disponibles. L'inscription n'est pas possible." << endl;
 		return;
 	}
 
-	std::string nomConcurrent;
+	string nomConcurrent;
+	cin.ignore(); 
 
-	std::cout << "Entrez le nom du concurrent : ";
-	std::cin >> nomConcurrent;
+	cout << "Entrez le nom du concurrent : ";
+	getline(cin, nomConcurrent);
 
-	// Retirer un dossard au hasard du conteneur dossardsPourAffectation
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dis(0, dossardsPourAffectation.size() - 1);
-	int randomIndex = dis(gen);
-	auto it = std::next(dossardsPourAffectation.begin(), randomIndex);
-	int dossard = *it;
-	dossardsPourAffectation.erase(it);
+	// retirer 1 dossard au hasard dans le conteneur dossardsPourAffectation
+	int dossard = dossardsPourAffectation.front();
+	dossardsPourAffectation.pop_front();
 
+	// Création du concurrent avec son nom et le dossard
 	Concurrent concurrent(nomConcurrent, dossard);
 
-	
+	// Ajouter le concurrent au conteneur concurrentsInscrits
 	concurrentsInscrits.push_back(concurrent);
 
-	// Affichage du concurrent inscrit et du nombre de dossards restants
-	std::cout << "Concurrent inscrit : " << concurrent.GetNom() << ", Dossard : " << concurrent.GetDossard() << std::endl;
-	std::cout << "Nombre de dossards restants : " << dossardsPourAffectation.size() << std::endl;
+	cout << "Concurrent inscrit : " << concurrent.GetNom() << " (Dossard : " << concurrent.GetDossard() << ")" << endl;
+	cout << "Nombre de dossards restants : " << dossardsPourAffectation.size() << endl;
 	
 }
 

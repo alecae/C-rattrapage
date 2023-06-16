@@ -36,9 +36,7 @@ public:
 	/// puis à les créer dans le conteneur dossardsPourAffectation.
 	/// Entre 2 et 100 dossards.
 	/// </summary>
-	void InitialiserCompetition() {
-
-	};
+	void InitialiserCompetition();
 
 	/// <summary>
 	/// Inscrire un concurent.
@@ -50,9 +48,7 @@ public:
 	/// Pas d'inscription possible s'il ne reste plus de dossard disponible.
 	/// Le concurrent est affiché ainsi que le nombre de dossards pouvant encore être attribués.
 	/// </summary>
-	void InscrireUnConcurrent() {
-
-	};
+	void InscrireUnConcurrent();
 
 	/// <summary>
 	/// Affiche la liste des concurrents inscrits par ordre alphabétique des noms
