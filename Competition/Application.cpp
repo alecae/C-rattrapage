@@ -61,7 +61,7 @@ void Application::InscrireUnConcurrent()
 	}
 
 	string nomConcurrent;
-	cin.ignore(); 
+	cin.ignore();
 
 	cout << "Entrez le nom du concurrent : ";
 	getline(cin, nomConcurrent);
@@ -78,7 +78,7 @@ void Application::InscrireUnConcurrent()
 
 	cout << "Concurrent inscrit : " << concurrent.GetNom() << " (Dossard : " << concurrent.GetDossard() << ")" << endl;
 	cout << "Nombre de dossards restants : " << dossardsPourAffectation.size() << endl;
-	
+
 }
 
 /// <summary>
