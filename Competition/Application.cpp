@@ -163,7 +163,19 @@ void Application::NoterConcurrents()
 /// </summary>
 void Application::AfficherResultats()
 {
-	//@TODO à compléter.
+	if (resultats.empty()) {
+		cout << "Aucun résultat à afficher." << endl;
+		return;
+	}
+
+	cout << "Résultats des concurrents : " << endl;
+
+	for (auto it = resultats.rbegin(); it != resultats.rend(); ++it) {
+		int score = it->first;
+		Concurrent concurrent = it->second;
+
+		cout << "Score: " << score << ", Dossard: " << concurrent.GetDossard() << ", Nom: " << concurrent.GetNom() << endl;
+	}
 }
 
 /// <summary>

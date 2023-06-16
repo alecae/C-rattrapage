@@ -73,7 +73,7 @@ public:
 	/// <summary>
 	/// Affiche le score, le dossard et le nom des concurrents notés.
 	/// </summary>
-	void AfficherResultats();
+	void AfficherResultats() {};
 
 	/// <summary>
 	/// Boucle d'exécution du programme.
